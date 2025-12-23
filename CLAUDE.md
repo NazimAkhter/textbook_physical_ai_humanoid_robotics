@@ -215,6 +215,8 @@ See `.specify/memory/constitution.md` for code quality, testing, performance, se
 - JavaScript (ES2020+), CSS3 + Docusaurus 3.x + Docusaurus 3.x, React 18.x, Infima CSS Framework (006-ui-theme-update)
 - JavaScript (ES2020+), React 18.x (007-rag-chatbot-ui)
 - Session storage (browser API) for conversation persistence; in-memory fallback for private browsing/quota exceeded scenarios (007-rag-chatbot-ui)
+- Markdown (Docusaurus 3.x compatible) + Docusaurus 3.x, React 18.x, Infima CSS Framework (001-intro-physical-ai-humanoid)
+- Static markdown files in docs/ directory (001-intro-physical-ai-humanoid)
 
 ## Recent Changes
 - 003-ui-book-update: Added JavaScript/JSX (ES2020+), CSS3 + Docusaurus 3.x, React 18.x, Infima CSS Framework
