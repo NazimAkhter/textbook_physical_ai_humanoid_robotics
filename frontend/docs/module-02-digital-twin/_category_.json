@@ -1,0 +1,9 @@
+{
+  "label": "Module 2: Digital Twins",
+  "position": 2,
+  "collapsed": false,
+  "link": {
+    "type": "generated-index",
+    "description": "Learn how digital twins enable safe robotics development through physics simulation, visualization, and sensor modeling."
+  }
+}

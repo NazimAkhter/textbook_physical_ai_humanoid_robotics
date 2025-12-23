@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(ls:*)",
+      "Bash(bash:*)",
+      "Bash(cat:*)",
+      "Bash(npm run build:*)",
+      "Bash(.specify/scripts/bash/create-new-feature.sh --json --number 5 --short-name \"module-04-vla\" \"Module 4 – Vision-Language-Action (VLA)\n\nTarget audience:\n- AI and robotics engineers integrating LLMs with physical systems\n- Developers building natural-language interfaces for robots\n- Students advancing from perception and navigation to cognitive control\n\nFocus:\n- Vision-Language-Action (VLA) as the convergence of LLMs and robotics\n- Voice-to-action pipelines using speech recognition\n- Cognitive planning: translating natural language goals into ROS 2 action sequences\n- End-to-end autonomous humanoid behavior\n\nContent scope (3–4 chapters, fixed order):\n\nChapter 1: Vision-Language-Action Systems  \n- Definition and motivation for VLA  \n- Position of VLA in the humanoid robotics stack\n\nConstraints:\n- Length: 2500–4000 words total\n- Format: Markdown source suitable for Docusaurus\n- Tone: Systems-level, explanatory, non-marketing\n- Code: Conceptual or illustrative snippets only (no full implementations)\n- Assumptions: Prior knowledge of ROS 2, simulation, and navigation from earlier modules\n\nNot building:\n- Full speech-to-text or LLM implementation guides\n- Prompt engineering tutorials\n- Safety, ethics, or alignment discussions\n- Real-world hardware deployment\n- Performance benchmarking or cost analysis\")",
+      "Bash(.specify/scripts/bash/setup-plan.sh:*)",
+      "Bash(.specify/scripts/bash/check-prerequisites.sh:*)",
+      "Bash(tee:*)"
+    ]
+  }
+}

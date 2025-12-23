@@ -1,0 +1,141 @@
+/**
+ * ChatToggleButton Styles
+ *
+ * Feature: 007-rag-chatbot-ui
+ * Requirements: FR-001, FR-016, FR-018
+ */
+
+.toggleButton {
+  /* Fixed positioning in bottom-right corner */
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 1000;
+
+  /* Size and shape */
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: none;
+  padding: 0;
+
+  /* Appearance */
+  background-color: var(--ifm-color-primary, #3578e5);
+  color: white;
+  cursor: pointer;
+
+  /* Flexbox for centering icon */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  /* Transitions */
+  transition:
+    transform 0.2s ease,
+    background-color 0.2s ease,
+    box-shadow 0.2s ease;
+
+  /* Shadow */
+  box-shadow:
+    0 4px 12px rgba(0, 0, 0, 0.15),
+    0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Hover state */
+.toggleButton:hover {
+  background-color: var(--ifm-color-primary-dark, #2e6bd1);
+  transform: scale(1.05);
+  box-shadow:
+    0 6px 16px rgba(0, 0, 0, 0.2),
+    0 3px 6px rgba(0, 0, 0, 0.15);
+}
+
+/* Focus state (accessibility FR-016) */
+.toggleButton:focus {
+  outline: none;
+  box-shadow:
+    0 0 0 3px var(--ifm-color-primary-lightest, #cfe2ff),
+    0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Focus visible (keyboard navigation) */
+.toggleButton:focus-visible {
+  outline: 2px solid var(--ifm-color-primary, #3578e5);
+  outline-offset: 2px;
+}
+
+/* Active/pressed state */
+.toggleButton:active {
+  transform: scale(0.98);
+}
+
+/* When panel is open */
+.toggleButton.open {
+  background-color: var(--ifm-color-emphasis-700, #444950);
+}
+
+.toggleButton.open:hover {
+  background-color: var(--ifm-color-emphasis-800, #1c1e21);
+}
+
+/* Icon container */
+.icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+}
+
+.icon svg {
+  width: 24px;
+  height: 24px;
+}
+
+/* Screen reader only text */
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Mobile adjustments */
+@media (max-width: 767px) {
+  .toggleButton {
+    bottom: 16px;
+    right: 16px;
+    width: 52px;
+    height: 52px;
+  }
+
+  .icon svg {
+    width: 22px;
+    height: 22px;
+  }
+}
+
+/* Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  .toggleButton {
+    transition: none;
+  }
+}
+
+/* Dark mode support */
+[data-theme='dark'] .toggleButton {
+  background-color: var(--ifm-color-primary-dark, #2e6bd1);
+}
+
+[data-theme='dark'] .toggleButton:hover {
+  background-color: var(--ifm-color-primary, #3578e5);
+}
+
+[data-theme='dark'] .toggleButton.open {
+  background-color: var(--ifm-color-emphasis-600, #606770);
+}

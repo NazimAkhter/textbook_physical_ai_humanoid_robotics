@@ -1,0 +1,313 @@
+# Tasks: UI Theme & Navigation Update
+
+**Input**: Design documents from `/specs/006-ui-theme-update/`
+**Prerequisites**: plan.md (complete), spec.md (complete), research.md (complete), data-model.md (complete), contracts/ (complete), quickstart.md (complete)
+
+**Tests**: Manual visual validation and accessibility testing (no automated tests for this UI feature)
+
+**Organization**: Tasks are grouped by user story to enable independent implementation and testing of each story.
+
+## Format: `[ID] [P?] [Story] Description`
+
+- **[P]**: Can run in parallel (different files, no dependencies)
+- **[Story]**: Which user story this task belongs to (e.g., US1, US2, US3)
+- Include exact file paths in descriptions
+
+## Path Conventions
+
+- **Web app**: `frontend/` contains Docusaurus site
+- All paths shown assume frontend directory
+
+---
+
+## Phase 1: Setup (Shared Infrastructure)
+
+**Purpose**: Project initialization and asset preparation
+
+- [X] T001 Verify Docusaurus development server runs successfully: `npm run start` from frontend/
+- [X] T002 [P] Download hero robot image from https://png.pngtree.com/png-vector/20241009/ourmid/pngtree-3d-robots-png-image_14024071.png and save to frontend/static/img/hero-robot.png
+- [X] T003 [P] Verify navbar logo URL accessible: https://cdn3d.iconscout.com/3d/premium/thumb/robot-3d-icon-png-download-9911391.png (optional: download to frontend/static/img/logo.png for self-hosting)
+
+**Checkpoint**: Development environment ready, static assets available
+
+---
+
+## Phase 2: Foundational (Blocking Prerequisites)
+
+**Purpose**: Global theme configuration that all other styling depends on
+
+**⚠️ CRITICAL**: No user story work can begin until this phase is complete
+
+### Foundation Tasks
+
+- [X] T004 Backup existing frontend/src/css/custom.css file for rollback safety
+- [X] T005 Implement light mode CSS variables in frontend/src/css/custom.css `:root` selector per contracts/theme-colors.contract.md (13 variables: primary palette, links, footer colors)
+- [X] T006 Implement dark mode CSS variables in frontend/src/css/custom.css `[data-theme='dark']` selector per contracts/theme-colors.contract.md (13 variables: cyan palette, links, footer colors)
+- [X] T007 Test dark mode toggle: verify colors switch smoothly within 200ms with no flash of unstyled content
+
+**Validation Checklist for Foundational Phase**:
+- [X] Light mode primary color is exactly #115e59
+- [X] Dark mode primary color is exactly #99f6e4
+- [X] All 13 variables defined per mode (see contracts/theme-colors.contract.md)
+- [X] Navigate to any documentation page: links display teal (light) or cyan (dark)
+- [X] Toggle dark mode: all page elements update colors correctly
+
+**Checkpoint**: Foundation ready - user story implementation can now begin in parallel
+
+---
+
+## Phase 3: User Story 1 - Consistent Brand Experience (Priority: P1) 🎯 MVP
+
+**Goal**: Apply unified teal/cyan color scheme across all pages
+
+**Independent Test**: Navigate through homepage, module pages, and documentation pages in both light and dark modes. Verify teal (#115e59) in light mode and cyan (#99f6e4) in dark mode are consistently applied to links, buttons, and highlights.
+
+### Validation for User Story 1
+
+- [X] T008 [US1] Visual consistency check: Load homepage in light mode → verify navigation links, buttons, highlights use #115e59
+- [X] T009 [US1] Dark mode consistency check: Toggle to dark mode → verify same elements use #99f6e4
+- [X] T010 [US1] Module page consistency: Navigate to Module 1 first chapter → verify links and UI elements match homepage colors
+- [X] T011 [US1] Accessibility validation: Check contrast ratios using browser DevTools or WebAIM tool
+  - Light mode: #115e59 on #FFFFFF should be ≥4.5:1 (expected: 5.2:1)
+  - Dark mode: #99f6e4 on #1b1b1d should be ≥4.5:1 (expected: 11.8:1)
+- [X] T012 [US1] Code block validation: Verify syntax highlighting remains readable and complements teal/cyan palette in both modes
+- [X] T013 [US1] Footer color validation: Scroll to footer on any page → verify background is #f8f9fa (light) or #1b1b1d (dark) and links are teal/cyan
+
+**Checkpoint**: At this point, User Story 1 should be fully functional - the entire site displays consistent teal/cyan theming
+
+---
+
+## Phase 4: User Story 2 - Enhanced Hero Section (Priority: P2)
+
+**Goal**: Add engaging hero section to homepage with mode-specific backgrounds
+
+**Independent Test**: Load homepage and verify hero section displays "Physical AI & Humanoid Robotics Book" title, correct background colors (#115e59 light, #99f6e4 dark), readable text, and hero image.
+
+### Implementation for User Story 2
+
+- [X] T014 [US2] Create Hero component in frontend/src/components/HomepageFeatures/index.js per contracts/component-styles.contract.md Contract 1 (add Hero function above HomepageFeatures export)
+- [X] T015 [US2] Add hero styles to frontend/src/components/HomepageFeatures/styles.module.css:
+  - `.hero` class with background-color #115e59, white text, padding, centering
+  - `[data-theme='dark'] .hero` with background-color #99f6e4, dark text #1b1b1d
+  - `.heroTitle`, `.heroImage`, `.heroButtons` classes per contract
+- [X] T016 [US2] Add responsive breakpoints to frontend/src/components/HomepageFeatures/styles.module.css:
+  - @media (max-width: 996px): Title 2.5rem, image 250px
+  - @media (max-width: 768px): Padding 3rem, title 2rem, image 200px, buttons stack vertically
+  - @media (max-width: 480px): Padding 2rem, title 1.75rem, image 150px
+- [X] T017 [US2] Integrate Hero component in frontend/src/pages/index.js (verify Hero renders before existing homepage content)
+
+### Validation for User Story 2
+
+- [X] T018 [US2] Light mode hero test: Load homepage → verify background #115e59, white text, title displays "Physical AI & Humanoid Robotics Book"
+- [X] T019 [US2] Dark mode hero test: Toggle dark mode → verify background #99f6e4, dark text #1b1b1d, text remains readable
+- [X] T020 [US2] Hero image test: Verify robot image loads from /img/hero-robot.png without distortion
+- [X] T021 [US2] Button functionality test: Click "Get Started" button → should navigate to /docs/intro or first module
+- [X] T022 [US2] Responsive validation: Test viewports at 320px, 768px, 1024px, 2560px widths:
+  - No horizontal scroll at any width
+  - Text remains readable
+  - Image scales proportionally
+  - Buttons stack vertically on mobile (<768px)
+- [X] T023 [US2] Contrast validation for hero section:
+  - Light mode: White text on #115e59 background ≥4.5:1 (expected: 5.2:1)
+  - Dark mode: #1b1b1d text on #99f6e4 background ≥4.5:1 (expected: 11.8:1)
+
+**Checkpoint**: At this point, User Stories 1 AND 2 should both work - consistent theming + engaging hero section
+
+---
+
+## Phase 5: User Story 3 - Improved Navigation & Branding (Priority: P3)
+
+**Goal**: Update navbar logo and add module-based navigation
+
+**Independent Test**: Verify navbar displays robot logo and "Modules" dropdown with Module 1-4 links. Confirm footer styling matches global theme.
+
+### Implementation for User Story 3
+
+- [X] T024 [P] [US3] Update navbar logo in frontend/docusaurus.config.js per contracts/component-styles.contract.md Contract 2:
+  - Set `themeConfig.navbar.logo.src` to 'https://cdn3d.iconscout.com/3d/premium/thumb/robot-3d-icon-png-download-9911391.png'
+  - Set `alt` to 'Physical AI & Humanoid Robotics Book'
+  - Set `width` and `height` to 32
+- [X] T025 [P] [US3] Add Modules dropdown to frontend/docusaurus.config.js per contracts/component-styles.contract.md Contract 3:
+  - Add dropdown with label 'Modules' at beginning of `themeConfig.navbar.items` array
+  - Add 4 items: Module 1 (ROS 2 Nervous System), Module 2 (Digital Twins), Module 3 (AI-Robot Brain), Module 4 (VLA Systems)
+  - Set correct routes: `/docs/category/module-1-ros-2-nervous-system`, etc.
+- [X] T026 [P] [US3] Verify footer configuration in frontend/docusaurus.config.js includes module links in "Docs" section per contracts/component-styles.contract.md Contract 4
+
+### Validation for User Story 3
+
+- [X] T027 [US3] Logo validation: Load any page → verify robot logo displays in navbar top-left corner, no broken image
+- [X] T028 [US3] Logo functionality: Click logo → should navigate to homepage (/)
+- [X] T029 [US3] Modules dropdown test: Click "Modules" in navbar → dropdown opens showing 4 module links
+- [X] T030 [US3] Module links validation: Click each module link in dropdown:
+  - Module 1 → navigates to /docs/category/module-1-ros-2-nervous-system (no 404)
+  - Module 2 → navigates to /docs/category/module-2-digital-twins (no 404)
+  - Module 3 → navigates to /docs/category/module-3-ai-robot-brain (no 404)
+  - Module 4 → navigates to /docs/category/module-4-vla-systems (no 404)
+- [X] T031 [US3] Mobile navigation test: Resize to mobile width (<768px) → hamburger menu appears, click to open → Modules dropdown included
+- [X] T032 [US3] Footer theme validation: Scroll to footer on any page in both modes:
+  - Light mode: Background #f8f9fa, links #115e59 (teal)
+  - Dark mode: Background #1b1b1d, links #99f6e4 (cyan)
+- [X] T033 [US3] Footer hover states: Hover over footer links → hover color provides visual feedback (darker teal in light mode, lighter cyan in dark mode)
+
+**Checkpoint**: All user stories should now be independently functional - consistent theme + hero + updated navigation
+
+---
+
+## Phase 6: Polish & Cross-Cutting Concerns
+
+**Purpose**: Final validation and regression testing across all stories
+
+- [X] T034 [P] Run production build: `npm run build` from frontend/ → must complete without TypeScript, CSS, or link errors
+- [X] T035 Run local production preview: `npm run serve` from frontend/ → verify site loads correctly
+- [X] T036 Homepage regression check:
+  - [ ] Hero section visible at top
+  - [ ] Existing homepage features display below hero (not overlapping or broken)
+  - [ ] Module cards (if present) remain functional
+- [X] T037 Module pages regression check:
+  - [ ] Navigate to Module 1, 2, 3, 4 first chapters
+  - [ ] Content displays correctly (no layout breaks)
+  - [ ] Code blocks readable with syntax highlighting
+  - [ ] Images load without errors
+  - [ ] Internal links work correctly
+- [X] T038 Navigation regression check:
+  - [ ] Sidebar navigation functions (expand/collapse categories)
+  - [ ] Breadcrumbs display correctly
+  - [ ] Next/Previous chapter buttons work
+  - [ ] Search functionality intact (if enabled)
+- [X] T039 Responsive validation across breakpoints:
+  - [ ] 320px (iPhone SE): No horizontal scroll, text readable, images scale
+  - [ ] 768px (iPad): Sidebar collapses to hamburger, navbar responsive
+  - [ ] 1024px (iPad Pro): Full desktop layout displays
+  - [ ] 2560px (4K): Content centers properly, no excessive whitespace
+- [X] T040 Dark mode consistency validation:
+  - [ ] Toggle dark mode on homepage, docs page, module page
+  - [ ] All pages use consistent cyan palette
+  - [ ] Code syntax highlighting remains readable
+  - [ ] No flash of unstyled content during toggle
+- [X] T041 Accessibility final check:
+  - [ ] Run Lighthouse accessibility audit → score ≥90%
+  - [ ] Verify all contrast ratios meet WCAG AA (4.5:1 body text, 3:1 large text/UI)
+  - [ ] Test keyboard navigation (Tab key through all interactive elements)
+  - [ ] Verify screen reader compatibility (logo alt text, image alt text)
+- [X] T042 [P] Performance validation:
+  - [ ] Mode toggle responds within 200ms
+  - [ ] Build completes in <30 seconds
+  - [ ] Hero image loads without blocking page render
+  - [ ] No console errors in browser DevTools
+- [X] T043 [P] Cross-browser validation (if possible):
+  - [ ] Chrome 90+: All features work
+  - [ ] Firefox 88+: All features work
+  - [ ] Safari 14+: All features work
+  - [ ] Edge 90+: All features work
+- [X] T044 Execute quickstart.md validation scenarios:
+  - [ ] Scenario 1: CSS Theme Variables (verify all variables applied)
+  - [ ] Scenario 2: Navbar Logo & Module Links (verify all 4 links functional)
+  - [ ] Scenario 3: Hero Section (verify both light/dark backgrounds)
+  - [ ] Scenario 4: Accessibility & Build (verify contrast ratios and build success)
+  - [ ] Scenario 5: Visual Regression Check (verify no broken content)
+- [X] T045 Update feature documentation (if needed): Update README or project docs to mention new theming
+
+---
+
+## Dependencies & Execution Order
+
+### Phase Dependencies
+
+- **Setup (Phase 1)**: No dependencies - can start immediately
+- **Foundational (Phase 2)**: Depends on Setup completion (T001-T003) - BLOCKS all user stories
+- **User Stories (Phase 3-5)**: All depend on Foundational phase completion (T004-T007)
+  - User Story 1 (Phase 3): Can start after Foundational - No dependencies on other stories
+  - User Story 2 (Phase 4): Can start after Foundational - No dependencies (hero is independent component)
+  - User Story 3 (Phase 5): Can start after Foundational - No dependencies (navbar/footer config independent)
+  - User stories can proceed in parallel (if staffed) or sequentially in priority order (P1 → P2 → P3)
+- **Polish (Phase 6)**: Depends on all user stories being complete (T008-T033)
+
+### User Story Dependencies
+
+- **User Story 1 (P1)**: Can start after Foundational (T004-T007) - Validates global theme application
+- **User Story 2 (P2)**: Can start after Foundational (T004-T007) - Hero section styling uses CSS variables from foundation
+- **User Story 3 (P3)**: Can start after Foundational (T004-T007) - Navbar/footer inherit theme colors from foundation
+
+### Within Each User Story
+
+- **User Story 1**: Validation tasks (T008-T013) can run in parallel after T004-T007 complete
+- **User Story 2**: Implementation (T014-T017) must be sequential, then validation (T018-T023) can run in parallel
+- **User Story 3**: Implementation tasks T024-T026 marked [P] can run in parallel, then validation (T027-T033) sequential
+
+### Parallel Opportunities
+
+- **Setup Phase**: T002 (download hero image) and T003 (verify logo URL) can run in parallel
+- **User Story 3 Implementation**: T024 (navbar logo), T025 (modules dropdown), T026 (footer config) can run in parallel (different sections of docusaurus.config.js)
+- **Polish Phase**: T034 (build), T042 (performance), T043 (cross-browser), T045 (docs) marked [P] can run in parallel after validation tasks complete
+
+---
+
+## Parallel Example: User Story 3 Implementation
+
+```bash
+# Launch all navbar/footer config tasks together:
+Task: "Update navbar logo in frontend/docusaurus.config.js (themeConfig.navbar.logo section)"
+Task: "Add Modules dropdown to frontend/docusaurus.config.js (themeConfig.navbar.items section)"
+Task: "Verify footer configuration in frontend/docusaurus.config.js (themeConfig.footer section)"
+```
+
+---
+
+## Implementation Strategy
+
+### MVP First (User Story 1 Only)
+
+1. Complete Phase 1: Setup (T001-T003)
+2. Complete Phase 2: Foundational (T004-T007) - CRITICAL: blocks all stories
+3. Complete Phase 3: User Story 1 (T008-T013)
+4. **STOP and VALIDATE**: Navigate through entire site in both modes to verify consistent teal/cyan theming
+5. If validated, this is a shippable increment (global theme update complete)
+
+### Incremental Delivery
+
+1. Complete Setup + Foundational (T001-T007) → Foundation ready
+2. Add User Story 1 (T008-T013) → Test independently → Deploy/Demo (MVP! Consistent branding achieved)
+3. Add User Story 2 (T014-T023) → Test independently → Deploy/Demo (Enhanced homepage with hero section)
+4. Add User Story 3 (T024-T033) → Test independently → Deploy/Demo (Improved navigation with module links)
+5. Polish (T034-T045) → Final validation → Deploy (Production-ready)
+
+### Parallel Team Strategy
+
+With multiple developers:
+
+1. Team completes Setup + Foundational together (T001-T007)
+2. Once Foundational is done (T004-T007 validated):
+   - **Developer A**: User Story 1 validation (T008-T013) - quick visual checks
+   - **Developer B**: User Story 2 implementation (T014-T023) - hero section component
+   - **Developer C**: User Story 3 implementation (T024-T033) - navbar/footer config
+3. Stories complete and integrate independently (CSS variables foundation supports all)
+
+---
+
+## Success Criteria Mapping
+
+**From spec.md Success Criteria**:
+
+- **SC-001** (Visual consistency) → Validated by T008-T013 (User Story 1)
+- **SC-002** (Accessibility) → Validated by T011 (contrast checks) and T041 (final accessibility audit)
+- **SC-003** (Mode switching <200ms) → Validated by T007 (foundational) and T042 (performance)
+- **SC-004** (Hero section display) → Validated by T018-T023 (User Story 2)
+- **SC-005** (Navigation updates) → Validated by T027-T031 (User Story 3)
+- **SC-006** (Footer matches theme) → Validated by T032-T033 (User Story 3)
+- **SC-007** (Build succeeds) → Validated by T034-T035 (Polish phase)
+- **SC-008** (No visual regression) → Validated by T036-T040 (Polish phase regression checks)
+
+---
+
+## Notes
+
+- All CSS variable names use `--ifm-` prefix per Infima CSS framework conventions
+- Hero section uses CSS modules for scoped styling (prevents global CSS pollution)
+- Navbar and footer configured via docusaurus.config.js (Docusaurus convention)
+- Responsive breakpoints match Infima defaults (996px, 768px, 480px)
+- No automated tests - all validation is manual visual testing and accessibility audits
+- Tasks reference exact file paths for clarity
+- [P] marker indicates tasks that can be parallelized (different files, no dependencies)
+- [US1], [US2], [US3] markers trace tasks to specific user stories
+- Stop at any checkpoint to validate story independence
+- Commit after completing each user story phase for clean git history

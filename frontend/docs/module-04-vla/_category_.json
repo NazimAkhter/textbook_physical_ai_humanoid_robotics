@@ -1,0 +1,9 @@
+{
+  "label": "Module 4: VLA Systems",
+  "position": 4,
+  "collapsed": false,
+  "link": {
+    "type": "generated-index",
+    "description": "Learn how Vision-Language-Action (VLA) systems enable humanoid robots to understand natural language commands and execute complex autonomous behaviors, completing the Physical AI stack."
+  }
+}

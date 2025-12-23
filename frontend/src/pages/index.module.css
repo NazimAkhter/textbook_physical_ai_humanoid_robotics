@@ -1,0 +1,107 @@
+/**
+ * CSS files with the .module.css suffix will be treated as CSS modules
+ * and scoped locally.
+ */
+
+/* Hero Section Styles */
+.hero {
+  background-color: #115e59;
+  color: #ffffff;
+  padding: 4rem 2rem;
+  text-align: center;
+  min-height: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Dark Mode Hero */
+:global([data-theme='dark']) .hero {
+  background-color: #14b8a6;
+  color: #1b1b1d;
+}
+
+.heroTitle {
+  font-size: 3rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  line-height: 1.2;
+}
+
+:global([data-theme='dark']) .heroTitle {
+  color: #1b1b1d;
+}
+
+.heroImage {
+  max-width: 300px;
+  height: auto;
+  margin: 2rem 0;
+}
+
+.heroButtons {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* Responsive Breakpoints */
+@media (max-width: 996px) {
+  .heroTitle {
+    font-size: 2.5rem;
+  }
+  .heroImage {
+    max-width: 250px;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero {
+    padding: 3rem 1.5rem;
+    min-height: 350px;
+  }
+  .heroTitle {
+    font-size: 2rem;
+  }
+  .heroImage {
+    max-width: 200px;
+  }
+  .heroButtons {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero {
+    padding: 2rem 1rem;
+    min-height: 300px;
+  }
+  .heroTitle {
+    font-size: 1.75rem;
+  }
+  .heroImage {
+    max-width: 150px;
+  }
+}
+
+/* Legacy styles (keep for compatibility) */
+.heroBanner {
+  padding: 4rem 0;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+@media screen and (max-width: 996px) {
+  .heroBanner {
+    padding: 2rem;
+  }
+}
+
+.buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
